@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import Playground from './components/Playground'
+import Playground from './components/Playground';
+import StartScreen from './components/StartScreen';
 
 import './App.css';
 
@@ -10,8 +11,23 @@ class App extends Component {
       activePage: 1
     }
 
+    window.goToPage = (num) => {
+      if(num < 0){
+        console.error('Переданный номер не может быть отрицательным');
+        return;
+      }
+
+      console.log(this.pages.length - 1);
+      if(num >= this.pages.length){
+        console.error('Переданный номер не может быть больше ' + (this.pages.length - 1).toString());
+        return;
+      }
+
+      this.setState({activePage: num});
+    }
+
     this.pages = [
-      'sdf',
+      (<StartScreen />),
       (<Playground />)
     ]
   }

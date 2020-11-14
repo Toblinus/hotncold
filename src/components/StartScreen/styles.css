@@ -1,0 +1,6 @@
+.start-screen {
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(180deg, #FFADC9 0%, #A8D1E3 99.48%),
+            linear-gradient(0deg, #FFFFFF, #FFFFFF);
+}
