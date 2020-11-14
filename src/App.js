@@ -13,7 +13,7 @@ class App extends Component {
 
     window.goToPage = (num) => {
       if(num < 0){
-        console.error('Переданный номер не может быть отрицательным');
+        console.error('Переданный номер не может   быть отрицательным');
         return;
       }
 
