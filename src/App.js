@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Playground from './components/Playground';
 import StartScreen from './components/StartScreen';
+// import WS from './helpers/serverConnect'
 
 import './App.css';
 
@@ -30,6 +31,10 @@ class App extends Component {
       (<StartScreen />),
       (<Playground />)
     ]
+  }
+
+  componentDidMount(){
+    // WS.connect();
   }
 
   render(){

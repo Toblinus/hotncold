@@ -47,5 +47,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Toblinus/hotncold.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Toblinus/hotncold/issues"
+  },
+  "homepage": "https://github.com/Toblinus/hotncold#readme",
+  "description": ""
 }
