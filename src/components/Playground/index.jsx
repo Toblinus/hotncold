@@ -1,114 +1,80 @@
+import { conditionalExpression } from "@babel/types";
 import React, {Component} from "react";
+import Container from "../Container";
+import MenuButton from "../MenuButton";
 import './styles.css';
 
-class Exit extends Component {
-    render() {
-        return (
-            <a className="exit-button">Exit</a>
-        )
-    }
-}
-
-class MessageField extends Component {
-    render() {
-        return (
-            <input type="text" className="send__message"></input>
-        )
-    }
-}
-
-class SendButton extends Component {
-    render() {
-        return (
-            <button className="send__button"><span className="send__icon"></span></button>
-        )
-    }
-
-}
-
-class Message extends Component {
-    render() {
-        return (
-            <span className="message">Толян</span>
-        )
-    }
-}
-
-class HotButton extends Component {
-    render() {
-        let className = 'hot-button ' + this.props.text;
-        return (
+function HotButton(props) {
+    let className = 'hot-button ' + props.text;
+    return (
+        <div style={{position: "relative"}}>
+            {props.active && <Arrow />}
             <div className="hot-button__container">
-                <button className={className}>{this.props.text}</button>
+                <button className={className} onClick={() => props.onClick()}>{props.text}</button>
             </div>
-        )
-    }
+        </div>
+        
+    )
 }
 
-class Arrow extends Component {
-    render() {
-        return (
-            <div className="arrow"></div>
-        )
-    }
+function Arrow() {
+    return <div className="arrow"></div>;
 }
 
 class Playground extends Component {
+    state = {
+        active: -1,
+        msgs: [{msg: "Привет", self: true}, {msg: "Здорово!", self: false}]
+    }
+
     render(){
+        const arrayButton = ['FIRE', 'HOT', 'WARM', 'COLD', 'ICE'].map((item, index) => 
+                    <HotButton 
+                        key={item} 
+                        text={item} 
+                        active={index === this.state.active} 
+                        onClick={() => this.setState({active: index})} />); 
+
+    const msgs = this.state.msgs.map((item, index) => <div 
+        className={"message" + (item.self ? " self" : "")} 
+        key={index}>{item.msg}
+        </div>)
+
         return (
             <div className="playground">
-                <div className="container">
+                <Container>
                     <div className="playground__inner">
-                        <div className="exit"><Exit/></div>
-                        <div className="messages">
-                            <div className="messages__inner">
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
-                                <Message/>
+                        <div className="top">
+                            <MenuButton text="EXIT" submenu onClick={this.props.onBack} />
+                            <div className="top__title">Room: ***</div>
+                        </div>
+                        <div className="middle">
+                            <div className="left">
+                                <div className="left__wrapper">
+                                    <div className="messages">
+                                            {msgs}
+                                    </div>
+                                </div>
                             </div>
-
+                            <div className="right">
+                                <div className="buttons">
+                                    { arrayButton }
+                                </div>
+                            </div>                       
                         </div>
-                        <div className="buttons">
-                            <Arrow/>
-                            <HotButton text="FIRE"/>
-                            <HotButton text="HOT"/>
-                            <HotButton text="WARM"/>
-                            <HotButton text="COLD"/>
-                            <HotButton text="ICE"/>
-                        </div>
-                        <div className="send">
-                            <MessageField/>
-                            <SendButton/>
-                        </div>
+                        <div className="bottom">
+                            <div className="send">
+                                <input type="text" className="send__message"></input>
+                                <button className="send__button" />
+                            </div>
+                        </div>                   
                     </div>
-                </div>
+                </Container>
             </div>
 
 
         )
     }
 }
-
-
 
 export default Playground;

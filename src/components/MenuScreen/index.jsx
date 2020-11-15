@@ -16,6 +16,11 @@ class MenuScreen extends Component {
                 }</div>                
             );
 
+            const toolrow = (!this.props.topbar || this.props.topbar.lenght < 1) ? 
+            null : this.props.topbar.map(
+                        item => 
+                        <MenuButton submenu key={item.text} text={item.text} onClick={item.action} />);
+
         const subcolumnInputs = (!this.props.inputs || this.props.inputs.lenght < 1) ? 
             null :
             (
@@ -38,8 +43,8 @@ class MenuScreen extends Component {
                         .header
                         .replaceAll('`', '`~`')
                         .split('`')
-                        .map(item => {
-                            return (item === '~') ? (<br />) : item;
+                        .map((item, index) => {
+                            return (item === '~') ? (<br key={index} />) : item;
                         })
                     }
                 </p>
@@ -48,6 +53,7 @@ class MenuScreen extends Component {
         return (
             <div className="start-screen">
                 <Container>
+                    <div className="start-screen__top-bar">{toolrow}</div>
                     <div className="start-screen__wrapper">
                         { title }
                         { subcolumnInputs } 

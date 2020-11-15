@@ -1,3 +1,5 @@
+import { throwStatement } from "@babel/types";
+
 export default (function(url){
     this.ws = new WebSocket(url); 
         const ws = this.ws;
@@ -16,7 +18,11 @@ export default (function(url){
         }
         ws.onmessage = (event) => {
             if(typeof this.onclose === "function"){
-                this.onclose(event.data);
+                let data = event.data;
+                try {
+                    data = JSON.parse(data);
+                } catch {}
+                this.onmsg(data);
             }
         }
         ws.onerror = (event) => {
@@ -44,5 +50,16 @@ export default (function(url){
      */
     this.abort = () => {
         this.ws.close();
+    }
+
+    this.createRoom = () => {
+        this.directSend('createRoom')
+    }
+
+    this.directSend = (type, data = []) => {
+        this.ws.send(JSON.stringify({
+            type,
+            args: data
+        }))
     }
 });

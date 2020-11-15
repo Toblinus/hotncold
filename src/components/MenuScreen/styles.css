@@ -40,3 +40,14 @@
     font-size: 64px;
     font-family: Exo, sans-serif;
 }
+
+.start-screen__top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}

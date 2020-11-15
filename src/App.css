@@ -12,3 +12,37 @@
     font-family: "Cuprum";
     src: url("./fonts/Cuprum-Regular.ttf");
 }
+
+.blocked-screen {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(32, 31, 31, 0.8);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 9999;
+}
+
+.blocked-screen__modal {
+    width: 80%;
+    max-width: 400px;
+    height: 300px;
+    background: linear-gradient(180deg, #FFADC9 0%, #A8D1E3 99.48%),
+    linear-gradient(0deg, #FFFFFF, #FFFFFF);
+    border-radius: 10px;
+    border: 3px solid #8E85A1;
+    overflow-x: hidden;
+    overflow-y: auto;
+    font-family: Cuprum,sans-serif;
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}

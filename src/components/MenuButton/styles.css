@@ -22,3 +22,12 @@
 .menu-button:active {
     transform: scale(.9);
 }
+
+.menu-button.menu-button_sub {
+    font-size: 23.04px;
+    padding: 6.4px 32px;
+}
+
+/* .menu-button.menu-button_sub:active {
+    transform: scale(.576);
+} */
