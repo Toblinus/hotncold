@@ -1,4 +1,3 @@
-import { conditionalExpression } from "@babel/types";
 import React, {Component} from "react";
 import Container from "../Container";
 import MenuButton from "../MenuButton";
@@ -22,9 +21,30 @@ function Arrow() {
 }
 
 class Playground extends Component {
-    state = {
-        active: -1,
-        msgs: [{msg: "Привет", self: true}, {msg: "Здорово!", self: false}]
+    constructor(props) {
+        super(props);
+        this.state = {
+            active: -1,
+            msgs: []
+        }
+    }
+
+    addMsg(msg, self = true){
+        const msgs = this.state.msgs.slice(0);
+        msgs.push({msg: msg, self});
+        this.setState({msgs});
+    }
+
+    componentDidMount(){
+        this.props.observ.onmsg = (data) => {
+            this.addMsg(data.msg, false);            
+        }
+
+        console.log(this.props.observ);
+    }
+
+    componentWillUnmount() {
+        this.props.observ.onmsg = null;
     }
 
     render(){
@@ -46,7 +66,7 @@ class Playground extends Component {
                     <div className="playground__inner">
                         <div className="top">
                             <MenuButton text="EXIT" submenu onClick={this.props.onBack} />
-                            <div className="top__title">Room: ***</div>
+                            <div className="top__title">Room: {this.props.getRoomCode()}</div>
                         </div>
                         <div className="middle">
                             <div className="left">
@@ -64,8 +84,13 @@ class Playground extends Component {
                         </div>
                         <div className="bottom">
                             <div className="send">
-                                <input type="text" className="send__message"></input>
-                                <button className="send__button" />
+                                <input type="text" className="send__message" id="inputMsgPlay"></input>
+                                <button className="send__button" onClick={() => {
+                                    var el = document.getElementById("inputMsgPlay");
+                                    this.props.observ.sendMsg(el.value);
+                                    this.addMsg(el.value);   
+                                    el.value = "";
+                                }}/>
                             </div>
                         </div>                   
                     </div>

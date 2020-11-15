@@ -34,8 +34,8 @@ export default (function(url){
     /**
      * Отправка сообщения
      */
-    this.sendMsg = function(){
-
+    this.sendMsg = (nick, room, msg) => {
+        this.directSend('msg', [nick, room, msg]);
     }
 
     /**
@@ -54,6 +54,10 @@ export default (function(url){
 
     this.createRoom = () => {
         this.directSend('createRoom')
+    }
+
+    this.joinRoom = (nick, room) => {
+        this.directSend('joinToRoom', [nick, room]);
     }
 
     this.directSend = (type, data = []) => {

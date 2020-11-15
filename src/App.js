@@ -7,7 +7,7 @@ import WS from './helpers/serverConnect';
 import './App.css';
 
 let __nick = localStorage.getItem('nickname');
-let __roomCode = localStorage.getItem('room-code');
+let __roomCode = "";
 let __socet = WebSocket;
 
 
@@ -15,7 +15,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      activePage: 1,
+      activePage: 0,
       blocked: false
     }
 
@@ -32,6 +32,13 @@ class App extends Component {
       }
 
       this.setState({activePage: num});
+    }
+
+    this.observ = {
+      onmsg: null,
+      onimg: null,
+      sendMsg: null,
+      sendImg: null
     }
 
     this.pages = [
@@ -72,17 +79,21 @@ class App extends Component {
             }
           }]} />
       ),
-      (<Playground onBack={() => this.setState({activePage: 0})} />),
+      (<Playground 
+          onBack={() => this.setState({activePage: 0})}
+          getRoomCode = { () =>__roomCode }
+          observ = {this.observ}
+        />),
       (<MenuScreen
         actions={[ 
           {
             text: "JOIN",
             action: () => {
-              if(!this.checkStateValid()){
+              if(!this.checkStateValid() || !__roomCode){
                 return;
               }
-
-              this.setState({activePage: 1});
+              
+              __socet.joinRoom(__nick, __roomCode);
             } 
           }
         ]}
@@ -97,7 +108,6 @@ class App extends Component {
         inputs={[
           {
             placeholder: "Room code",
-            value: __roomCode, 
             action: (event) => {
               __roomCode = event.target.value;
             }
@@ -112,10 +122,29 @@ class App extends Component {
 
   componentDidMount(){
     try {
+      // __socet = new WS("ws://localhost:4000");
       __socet = new WS("wss://hotncold-server.herokuapp.com");
       window.t = __socet;
       __socet.onclose = (c) => this.setState({blocked: !c});
-      __socet.onconnect = () => this.setState({blocked: false});   
+      __socet.onconnect = () => this.setState({blocked: false});
+      this.observ.sendMsg = (msg) => __socet.sendMsg(__nick, __roomCode, msg);
+      __socet.onmsg = (data) => {
+        if(data.type === "run-game"){
+          __roomCode = data.room;
+          this.setState({activePage: 1});
+        } else if(data.type === "exit") {
+          __roomCode = data.room;
+          this.setState({activePage: 0});
+        } else if(data.type === "msg") {
+            if(typeof this.observ.onmsg === "function"){
+              this.observ.onmsg(data);
+            }
+        }  else if(data.type.onimg === "img") {
+          if(typeof this.observ === "function"){
+            this.observ.onimg(data);
+          }
+        }
+      }   
     } catch {
       this.setState({blocked: true});
     }
