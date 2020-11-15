@@ -111,10 +111,15 @@ class App extends Component {
   }
 
   componentDidMount(){
-    __socet = new WS("ws://192.168.0.85:4000");
-    window.t = __socet;
-    __socet.onclose = (c) => this.setState({blocked: !c});
-    __socet.onconnect = () => this.setState({blocked: false});    
+    try {
+      __socet = new WS("ws://192.168.0.85:4000");
+      window.t = __socet;
+      __socet.onclose = (c) => this.setState({blocked: !c});
+      __socet.onconnect = () => this.setState({blocked: false});   
+    } catch {
+      this.setState({blocked: true});
+    }
+     
   }
 
   render(){
