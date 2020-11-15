@@ -112,7 +112,7 @@ class App extends Component {
 
   componentDidMount(){
     try {
-      __socet = new WS("ws://192.168.0.85:4000");
+      __socet = new WS("wss://hotncold-server.herokuapp.com");
       window.t = __socet;
       __socet.onclose = (c) => this.setState({blocked: !c});
       __socet.onconnect = () => this.setState({blocked: false});   
