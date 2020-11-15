@@ -1,51 +1,62 @@
 import React, {Component} from "react";
+import Container from "../Container";
+import MenuButton from "../MenuButton";
+import TextBox from "../TextBox";
 import './styles.css';
 
-class Button extends Component {
-    render() {
-        return (
-            <a className="start-screen__button" >{this.props.text}</a>
-        )
-    }
-}
-
-class Title extends Component {
-    render() {
-        return (
-            <div className="title__container">
-                <p className="title__text">HOT<br/>'N'<br/>COLD<br/></p>
-            </div>
-
-        )
-    }
-}
-
-class Form extends Component {
-    render() {
-        return (
-            <form action="" className="form">
-                <label htmlFor="nick">Your nickname</label>
-                <input id="nick" type="text" placeholder="............."/>
-            </form>
-        )
-    }
-}
-
-class StartScreen extends Component {
+class MenuScreen extends Component {
     render(){
+        const subcolumnBtns = (!this.props.actions || this.props.actions.lenght < 1) ? 
+            null :
+            (
+                <div className="start-screen__subcolumn">{
+                    this.props.actions.map(
+                        item => 
+                        <MenuButton key={item.text} text={item.text} onClick={item.action} />)
+                }</div>                
+            );
+
+        const subcolumnInputs = (!this.props.inputs || this.props.inputs.lenght < 1) ? 
+            null :
+            (
+                <div className="start-screen__subcolumn">{
+                    this.props.inputs.map(
+                        item => 
+                        <TextBox
+                            header={item.header}
+                            value={item.value}
+                            key={item.value + item.header + item.placeholder} 
+                            placeholder={item.placeholder} 
+                            onChange={item.action} />)
+                }</div>                
+            );
+        
+        const title = (!this.props.header) ? null : 
+            (<div className="title__container">
+                <p className="title__text">
+                    {this.props
+                        .header
+                        .replaceAll('`', '`~`')
+                        .split('`')
+                        .map(item => {
+                            return (item === '~') ? (<br />) : item;
+                        })
+                    }
+                </p>
+            </div>);
+
         return (
             <div className="start-screen">
-                <div className="container">
-                    <div className="screen">
-                        <Title/>
-                        <Form/>
-                        <Button text="START"/>
-                        <Button text="OPTIONS"/>
+                <Container>
+                    <div className="start-screen__wrapper">
+                        { title }
+                        { subcolumnInputs } 
+                        { subcolumnBtns }
                     </div>
-                </div>
+                </Container>
             </div>
         );
     }
 }
 
-export default StartScreen;
+export default MenuScreen;

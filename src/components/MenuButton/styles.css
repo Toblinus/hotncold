@@ -1,0 +1,24 @@
+.menu-button {
+    text-align: center;
+    background-color: #463156;
+    border: 1px solid black;
+    border-radius: 50px;
+    color: white;
+    padding: 10px 50px;
+    font-size: 36px;
+    font-family: Cuprum, sans-serif;
+    font-weight: 700;
+    letter-spacing: 4px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.menu-button:focus {
+    outline: none;
+}
+
+.menu-button:active {
+    transform: scale(.9);
+}

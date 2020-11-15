@@ -5,11 +5,13 @@ import StartScreen from './components/StartScreen';
 
 import './App.css';
 
+let __nick = localStorage.getItem('nickname');
+
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      activePage: 1
+      activePage: 0
     }
 
     window.goToPage = (num) => {
@@ -28,7 +30,18 @@ class App extends Component {
     }
 
     this.pages = [
-      (<StartScreen />),
+      (<StartScreen 
+        actions={[{text: "CREATE"}, {text: "JOIN"}]} 
+        header="HOT`'N'`COLD"
+        inputs={[
+          {
+            placeholder: "Your nickname",
+            value: __nick, 
+            action: (event) => {
+              __nick = event.target.value;
+            }
+          }]} />
+      ),
       (<Playground />)
     ]
   }

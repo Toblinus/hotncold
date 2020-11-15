@@ -1,9 +1,5 @@
-export default (new (function(){
-    /**
-     * Соединение с сервером
-     */
-    this.connect = function(){
-        this.ws = new WebSocket('ws:localhost'); 
+export default (function(url){
+    this.ws = new WebSocket(url); 
         const ws = this.ws;
 
 
@@ -28,7 +24,6 @@ export default (new (function(){
                 this.onerror(event?.message);
             }
         };
-    }
 
     /**
      * Отправка сообщения
@@ -50,4 +45,4 @@ export default (new (function(){
     this.abort = () => {
         this.ws.close();
     }
-})());
+});

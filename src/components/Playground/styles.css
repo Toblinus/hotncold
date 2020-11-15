@@ -5,11 +5,6 @@
     /*padding: 10px 15px;*/
 }
 
-@font-face {
-    font-family: "Cuprum";
-    src: url("../../fonts/Cuprum-Regular.ttf");
-}
-
 .container {
     width: 100%;
     max-width: 1200px;

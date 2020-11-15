@@ -1,0 +1,23 @@
+.text-box {
+    width: 260px;
+    padding-bottom: 20px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.text-box__header {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: Cuprum, sans-serif;
+    margin-bottom: 10px;
+}
+
+.text-box__input {
+    text-align: center;
+    color: #000000;
+    border-radius: 23px;
+    border: 2px solid #8E85A1;
+    font-size: 24px;
+    line-height: 40px;
+}
